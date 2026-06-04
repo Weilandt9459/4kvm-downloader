@@ -1,5 +1,6 @@
 # 4kvm-downloader
 
+[![CI](https://github.com/yay0128/4kvm-downloader/actions/workflows/test.yml/badge.svg)](https://github.com/yay0128/4kvm-downloader/actions/workflows/test.yml)
 [![Python 3.9+](https://img.shields.io/badge/python-3.9+-blue.svg)](https://www.python.org/downloads/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 [![FFmpeg](https://img.shields.io/badge/depends-ffmpeg-green.svg)](https://ffmpeg.org/)
