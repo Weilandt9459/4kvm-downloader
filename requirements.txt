@@ -1,0 +1,23 @@
+# 4kvm-downloader dependencies
+# Python 3.9+ required
+
+# Core dependencies (stdlib only):
+#   - urllib.request
+#   - ssl
+#   - subprocess
+#   - concurrent.futures
+#   - json
+#   - dataclasses
+#   - pathlib
+
+# External: Playwright is used via the Node.js scripts, not directly from Python.
+# To run the extractor scripts you need:
+#   npm install playwright
+#   npx playwright install chromium
+#
+# There is no Python package install required for the core downloader.
+# This file exists for documentation and to enable `pip install -r requirements.txt`
+# in CI / dev environments.
+
+# Optional: for running tests
+pytest>=7.0

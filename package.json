@@ -1,0 +1,30 @@
+{
+  "name": "4kvm-downloader",
+  "version": "1.0.0",
+  "description": "Robust downloader for 4kvm.net, defeating 8 layers of anti-scraping protection",
+  "main": "src/py4kvm/__init__.py",
+  "scripts": {
+    "extract": "node scripts/extract_m3u8.js",
+    "test": "pytest tests/ -v",
+    "lint": "python -m py_compile src/py4kvm/*.py scripts/*.py"
+  },
+  "keywords": [
+    "4kvm",
+    "video-downloader",
+    "hls",
+    "m3u8",
+    "tencent-cos",
+    "playwright"
+  ],
+  "author": "4kvm-downloader contributors",
+  "license": "MIT",
+  "engines": {
+    "node": ">=18"
+  },
+  "dependencies": {
+    "playwright": "^1.40.0"
+  },
+  "devDependencies": {
+    "@types/node": "^20.0.0"
+  }
+}
