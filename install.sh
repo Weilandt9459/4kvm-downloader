@@ -18,7 +18,7 @@
 set -euo pipefail
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-SKILL_SRC="$SCRIPT_DIR/.claude/skills/4kvm-downloader"
+SKILL_SRC="$SCRIPT_DIR/4kvm-downloader"
 SKILL_NAME="4kvm-downloader"
 
 # Tool name → (user-global path, project-relative path)
@@ -65,9 +65,12 @@ install_one() {
             echo "  ✓ $label: already linked"
             return 0
         else
-            echo "  ! $label: existing symlink points elsewhere: $existing"
-            echo "    Remove manually if you want to update: rm '$target'"
-            return 1
+            # Existing symlink points elsewhere (likely the old location).
+            # Auto-update it to the new canonical path.
+            rm "$target"
+            ln -s "$SKILL_SRC" "$target"
+            echo "  ↻ $label: updated symlink ($existing → $SKILL_SRC)"
+            return 0
         fi
     elif [ -e "$target" ]; then
         echo "  ✗ $label: target exists and is not a symlink. Skipping."

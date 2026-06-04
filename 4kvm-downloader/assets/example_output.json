@@ -1,0 +1,52 @@
+{
+  "episode": "校园之外 S01E01",
+  "source_url": "https://www.4kvm.net/play/ch46zvt3r",
+  "title": "校园之外 第一季 - 第1集 -4k影视",
+  "extraction": {
+    "duration_seconds": 4,
+    "m3u8_url": "https://oss.douyinbit.com/m3u8/f02bf420a20131e5c975f51e7a6e5441.m3u8",
+    "quality_urls": [
+      {
+        "mtype": "m3u8",
+        "bitrate": 2160000,
+        "title": "4K",
+        "description": "蓝光",
+        "isvip": true,
+        "locked": true,
+        "url": "1"
+      },
+      {
+        "mtype": "m3u8",
+        "bitrate": 1080,
+        "title": "1080p",
+        "description": "超清",
+        "isvip": false,
+        "locked": false,
+        "url": "https://oss.douyinbit.com/m3u8/f02bf420a20131e5c975f51e7a6e5441.m3u8"
+      }
+    ]
+  },
+  "download": {
+    "segments_total": 642,
+    "parallel_workers": 2,
+    "parallel_ok": 621,
+    "parallel_failed": 21,
+    "curl_recovered": 21,
+    "still_missing": 0,
+    "png_stripped_bytes": 46899,
+    "merged_size_bytes": 1127157765,
+    "duration_seconds": 240
+  },
+  "output": {
+    "path": "/Users/oly/Desktop/项目1/校园之外_S01E01.mp4",
+    "size_bytes": 1079025781,
+    "size_mb": 1029.0,
+    "duration_minutes": 53.5,
+    "ffprobe": {
+      "width": 1920,
+      "height": 960,
+      "codec": "h264",
+      "audio_codec": "aac"
+    }
+  }
+}

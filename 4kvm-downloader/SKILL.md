@@ -1,6 +1,19 @@
 ---
 name: 4kvm-downloader
-description: Download videos from 4kvm.net by automating the full pipeline — extract m3u8 via Playwright, download segments, strip PNG wrappers, and convert to MP4. Trigger when user provides a 4kvm.net URL or asks to download from 4kvm.
+version: 1.0.0
+description: >
+  Download videos from 4kvm.net by automating the full pipeline —
+  extract m3u8 via Playwright, download segments, strip PNG wrappers,
+  and convert to MP4. Trigger when user provides a 4kvm.net URL
+  or asks to download from 4kvm.
+tags:
+  - video-downloader
+  - anti-scraping
+  - 4kvm
+  - playwright
+  - ffmpeg
+author: yay0128
+license: MIT
 ---
 
 # 4kvm.net Video Downloader
@@ -326,6 +339,40 @@ After successful download and verification, delete temporary files to save disk:
 rm -rf video_download/
 rm -f extract_m3u8.js get_title.js download_video.py
 ```
+
+## Bundled resources
+
+This Skill ships with helper scripts in the `scripts/` directory. You can either
+generate scripts on the fly as described in the main workflow, or directly execute
+the pre-built scripts with the appropriate environment variables set.
+
+- **`scripts/get_title.js`** – Playwright script to extract page title and derive output filename.
+- **`scripts/extract_m3u8.js`** – Playwright script to intercept WASM-signed API and capture m3u8 URL.
+- **`scripts/download_video.py`** – Python script to download HLS segments, strip PNG wrappers, and convert to MP4. Reads `M3U8_URL` and `OUTPUT_FILE` from environment.
+
+When using the bundled scripts:
+
+```bash
+# Step 1: Get the title (saves title to stdout, JSON-formatted)
+node scripts/get_title.js "https://www.4kvm.net/play/ch0xz51yd"
+# → {"title": "校园之外 第一季 - 第1集 -4k影视"}
+
+# Step 2: Extract the m3u8 URL
+node scripts/extract_m3u8.js "https://www.4kvm.net/play/ch0xz51yd"
+# → Prints Quality URLs and the chosen m3u8 URL
+
+# Step 3: Download with the m3u8 URL and output path
+export M3U8_URL="https://oss.douyinbit.com/m3u8/...m3u8"
+export OUTPUT_FILE="/path/to/校园之外_S01E01.mp4"
+python3 scripts/download_video.py
+```
+
+Additional reference material:
+
+- **`references/anti_scraping_layers.md`** – Detailed analysis of the 8 anti-scraping layers
+  this Skill defeats, with technical deep-dives into the Tencent COS CDN, connection-level
+  rate limiting, and base64-encoded `/ets/` paths.
+- **`assets/example_output.json`** – Sample output of a successful run for reference.
 
 ## Important notes
 

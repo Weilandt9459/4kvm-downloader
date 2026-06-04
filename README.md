@@ -6,8 +6,44 @@
 [![FFmpeg](https://img.shields.io/badge/depends-ffmpeg-green.svg)](https://ffmpeg.org/)
 
 A robust downloader for [4kvm.net](https://www.4kvm.net) that defeats 8 layers of anti-scraping
-protection used by the site's Tencent COS CDN. Provides both a Python library and a CLI for
-single videos and full-season batch downloads.
+protection used by the site's Tencent COS CDN. Designed as a portable **AI agent skill** that
+works in Claude Code, Codex, and other tools — and also usable as a Python library and CLI
+for direct downloads.
+
+## Repository layout
+
+This repo is **both** a normal GitHub project **and** an [Agent Skills](https://github.com/openai/codex/blob/main/docs/skills.md)-format skill bundle:
+
+```
+4kvm-downloader/                       ← Repository root (GitHub project)
+├── README.md                          ← This file (human-facing)
+├── LICENSE
+├── install.sh                         ← Cross-tool skill installer
+├── Makefile
+├── package.json
+├── requirements.txt
+├── .github/workflows/test.yml
+├── src/py4kvm/                        ← Python library (the "real" downloader)
+├── scripts/                           ← CLI entry points
+├── tests/                             ← Library tests (15 unit tests)
+├── docs/                              ← Architecture & cross-tool docs
+├── examples/                          ← Library usage examples
+│
+└── 4kvm-downloader/                   ← 🎯 THE SKILL (Agent Skills format)
+    ├── SKILL.md                       ← Skill entry point (YAML frontmatter + workflow)
+    ├── scripts/                       ← Pre-built helper scripts
+    │   ├── get_title.js               ← Step 1: Playwright title extraction
+    │   ├── extract_m3u8.js            ← Step 2: Playwright m3u8 extraction
+    │   └── download_video.py          ← Step 3: Python download + PNG strip + ffmpeg
+    ├── references/                    ← Reference material loaded on demand
+    │   └── anti_scraping_layers.md    ← Deep dive on the 8 anti-scraping layers
+    └── assets/                        ← Sample output
+        └── example_output.json
+```
+
+The skill (`4kvm-downloader/4kvm-downloader/`) is what AI agents load when triggered
+by a 4kvm URL. The Python library at the root is the more feature-rich version that
+powers both the skill and the standalone CLI.
 
 ## Features
 
@@ -170,35 +206,35 @@ The site uses 8 layers of protection; we defeat each one:
 [Concatenate to .ts] → [ffmpeg copy → .mp4]
 ```
 
-## Project layout
+## Project layout (library + scripts)
+
+In addition to the skill, the project also ships a Python library and CLI:
 
 ```
-4kvm-downloader/
-├── README.md                # This file
-├── LICENSE                  # MIT
-├── requirements.txt         # Python deps
-├── package.json             # Node deps (for Playwright scripts)
-├── .gitignore
-├── src/py4kvm/              # Library code
+4kvm-downloader/                # Repository root
+├── src/py4kvm/                 # Library code
 │   ├── __init__.py
-│   ├── downloader.py        # Segment download + recovery
-│   ├── extractor.py         # Playwright m3u8 extraction
-│   ├── converter.py         # PNG strip + ffmpeg wrapper
-│   ├── batch.py             # Full-season orchestration
-│   └── utils.py             # ffprobe wrapper, helpers
-├── scripts/                 # CLI entry points
-│   ├── download.py          # Single video
-│   ├── batch_download.py    # Full season
-│   └── find_episodes.js     # Episode link scraper
-├── examples/                # Usage examples
-│   └── library_usage.py
-├── tests/                   # Unit tests
+│   ├── downloader.py           # Segment download + recovery
+│   ├── extractor.py            # Playwright m3u8 extraction
+│   ├── converter.py            # PNG strip + ffmpeg wrapper
+│   ├── batch.py                # Full-season orchestration
+│   └── utils.py                # ffprobe wrapper, helpers
+├── scripts/                    # CLI entry points (advanced)
+│   ├── download.py             # Single video
+│   ├── batch_download.py       # Full season
+│   └── find_episodes.js        # Episode link scraper
+├── examples/
+│   └── library_usage.py        # 5 examples
+├── tests/                      # 15 unit tests
 │   ├── test_converter.py
-│   ├── test_utils.py
-│   └── fixtures/            # Sample PNG-wrapped TS for testing
+│   └── test_utils.py
 └── docs/
-    └── architecture.md      # Detailed design notes
+    ├── architecture.md         # Design notes
+    └── cross-tool.md           # AI tool install guide
 ```
+
+Most users only need the skill (`4kvm-downloader/4kvm-downloader/`) and the
+bundled scripts inside it. The library is for programmatic use.
 
 ## Troubleshooting
 

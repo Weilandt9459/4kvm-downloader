@@ -25,8 +25,11 @@ test:  ## Run unit tests
 
 lint:  ## Quick syntax check
 	$(PYTHON) -m py_compile src/py4kvm/*.py scripts/*.py examples/*.py tests/*.py
+	$(PYTHON) -m py_compile 4kvm-downloader/scripts/*.py
 	$(NODE) -c scripts/extract_m3u8.js
 	$(NODE) -c scripts/find_episodes.js
+	$(NODE) -c 4kvm-downloader/scripts/get_title.js
+	$(NODE) -c 4kvm-downloader/scripts/extract_m3u8.js
 
 clean:  ## Remove work directories, caches, downloaded files
 	rm -rf video_download/ batch_work/ downloads/
