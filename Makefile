@@ -1,4 +1,4 @@
-.PHONY: help install test lint clean download batch all
+.PHONY: help install skill-install skill-uninstall test lint clean download batch all
 
 PYTHON ?= python3
 NODE ?= node
@@ -11,11 +11,20 @@ install:  ## Install Python and Node dependencies
 	npm install
 	npx playwright install chromium
 
+skill-install:  ## Install skill to all AI tool locations (Claude Code, Codex, etc.)
+	./install.sh
+
+skill-uninstall:  ## Remove skill symlinks from all AI tool locations
+	./install.sh --uninstall
+
+skill-list:  ## Show where the skill would be installed
+	./install.sh --list
+
 test:  ## Run unit tests
 	$(PYTHON) -m pytest tests/ -v
 
 lint:  ## Quick syntax check
-	$(PYTHON) -m py_compile src/py4kvm/*.py scripts/*.py examples/*.py
+	$(PYTHON) -m py_compile src/py4kvm/*.py scripts/*.py examples/*.py tests/*.py
 	$(NODE) -c scripts/extract_m3u8.js
 	$(NODE) -c scripts/find_episodes.js
 

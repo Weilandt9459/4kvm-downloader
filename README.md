@@ -18,6 +18,8 @@ single videos and full-season batch downloads.
 - 📦 **Self-contained** — no `ffmpeg` HLS parsing needed; we strip PNG wrappers and
   re-mux manually
 - 🐍 **Library + CLI** — use as a Python module or from the command line
+- 🤖 **Works as a skill in Claude Code, Codex, and other AI tools** — see
+  [Cross-tool compatibility](#cross-tool-compatibility-ai-skills)
 
 ## Installation
 
@@ -38,6 +40,57 @@ cd 4kvm-downloader
 pip install -r requirements.txt
 npx playwright install chromium
 ```
+
+## Cross-tool compatibility (AI skills)
+
+This project ships as a **skill** (in `.claude/skills/4kvm-downloader/`) that works
+identically in **Claude Code**, **Codex**, and other tools that use the SKILL.md
+format. The same `SKILL.md` frontmatter (`name` + `description`) is recognized by:
+
+| Tool | Skill location | Format |
+|------|---------------|--------|
+| Claude Code | `~/.claude/skills/<name>/` or `./.claude/skills/<name>/` | `SKILL.md` with frontmatter |
+| Codex | `~/.codex/skills/<name>/` or `./.codex/skills/<name>/` | `SKILL.md` with frontmatter |
+| OpenCode | `~/.config/opencode/skills/<name>/` | Compatible |
+| Continue.dev | `~/.continue/skills/` | Compatible (manual config) |
+
+### Install as a skill
+
+The bundled `install.sh` creates symlinks (not copies) so updates to the skill
+are immediately picked up by your AI tool:
+
+```bash
+# Install to all detected user-global locations
+./install.sh
+
+# Install to the current project only (./.claude, ./.codex)
+./install.sh --project
+
+# See what would be installed
+./install.sh --list
+
+# Remove all symlinks pointing to this skill
+./install.sh --uninstall
+```
+
+After running `./install.sh`, restart Claude Code or Codex and the skill will
+be auto-loaded. You can then trigger it by asking:
+
+> "Download this 4kvm.net video: https://www.4kvm.net/play/ch46zvt3r"
+
+The tool will detect the URL pattern, load the `4kvm-downloader` skill, and
+follow the workflow defined in `SKILL.md`.
+
+### Why symlinks?
+
+We use symlinks (not copies) so:
+- ✅ One source of truth (the repo's `.claude/skills/4kvm-downloader/SKILL.md`)
+- ✅ Edits to the skill are immediately effective — no reinstall needed
+- ✅ `git pull` updates the skill automatically
+- ✅ Single uninstall removes everything (just `rm` the symlinks)
+
+See [docs/cross-tool.md](docs/cross-tool.md) for format details and per-tool
+installation instructions.
 
 ## Quick start
 
